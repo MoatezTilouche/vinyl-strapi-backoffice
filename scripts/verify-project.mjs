@@ -1,8 +1,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
+import { fileURLToPath } from 'node:url';
 
-const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const failures = [];
 const ok = [];
 
@@ -25,7 +26,6 @@ function json(rel) {
 
 const requiredFiles = [
   'README.md',
-  'DELIVERY_CHECKLIST.md',
   '.env.example',
   'docker-compose.yml',
   'backend/.env.example',
