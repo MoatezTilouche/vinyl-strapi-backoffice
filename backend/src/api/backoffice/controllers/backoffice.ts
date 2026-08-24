@@ -79,36 +79,85 @@ export default {
       ctx.body = { data: units };
     } catch (e: any) { ctx.badRequest(e.message); }
   },
+async createUnit(ctx: any) {
+  try {
+    const tenantId = tenantIdFrom(ctx);
+    const productId = Number(ctx.params.productId);
 
-  async createUnit(ctx: any) {
-    try {
-      const tenantId = tenantIdFrom(ctx);
-      const productId = Number(ctx.params.productId);
-      if (!(await ensureTenant(tenantId))) return ctx.notFound('Active tenant not found');
-      const b = ctx.request.body ?? {};
-      const product = await strapi.db.query('api::product.product').findOne({ where: { id: productId, tenant: { id: tenantId } } });
-      if (!product) return ctx.notFound('Product not found for tenant');
-      if (b.price === undefined || !b.mediaCondition || !b.sleeveCondition) return ctx.badRequest('price, mediaCondition and sleeveCondition are required');
-      const price = Number(b.price);
-      if (!Number.isFinite(price) || price <= 0) return ctx.badRequest('price must be a positive number');
-      const unit = await strapi.db.query('api::sellable-unit.sellable-unit').create({
+    if (!(await ensureTenant(tenantId))) {
+      return ctx.notFound('Active tenant not found');
+    }
+
+    const b = ctx.request.body ?? {};
+
+    const product = await strapi.db
+      .query('api::product.product')
+      .findOne({
+        where: {
+          id: productId,
+          tenant: { id: tenantId },
+        },
+      });
+
+    if (!product) {
+      return ctx.notFound('Product not found for tenant');
+    }
+
+    if (
+      b.price === undefined ||
+      !b.mediaCondition ||
+      !b.sleeveCondition
+    ) {
+      return ctx.badRequest(
+        'price, mediaCondition and sleeveCondition are required'
+      );
+    }
+
+    const price = Number(b.price);
+
+    if (!Number.isFinite(price) || price <= 0) {
+      return ctx.badRequest('price must be a positive number');
+    }
+
+    const quantityAvailable = Number(
+      b.quantityAvailable ?? 1
+    );
+
+    if (
+      !Number.isInteger(quantityAvailable) ||
+      quantityAvailable < 1
+    ) {
+      return ctx.badRequest(
+        'quantityAvailable must be an integer greater than 0'
+      );
+    }
+
+    const unit = await strapi.db
+      .query('api::sellable-unit.sellable-unit')
+      .create({
         data: {
           tenant: tenantId,
           product: productId,
-          // sku is injected by the lifecycle hook; any client SKU is ignored.
+
+          // sku is injected by the lifecycle hook;
+          // any client SKU is ignored.
+
           price,
           currency: b.currency || 'EUR',
           mediaCondition: b.mediaCondition,
           sleeveCondition: b.sleeveCondition,
           sellerComment: b.sellerComment || null,
           saleStatus: 'available',
-          quantityAvailable: 1,
+          quantityAvailable,
           internalLocation: b.internalLocation || null,
         },
       });
-      ctx.body = { data: unit };
-    } catch (e: any) { ctx.badRequest(e.message); }
-  },
+
+    ctx.body = { data: unit };
+  } catch (e: any) {
+    ctx.badRequest(e.message);
+  }
+},
 
   async listings(ctx: any) {
     try {
