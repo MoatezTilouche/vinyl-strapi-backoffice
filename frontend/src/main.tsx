@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { api } from './api';
 import './styles.css';
+import './inventory-status.css';
 
 type Tab = 'dashboard' | 'products' | 'inventory' | 'listings' | 'logs';
 
@@ -591,8 +592,8 @@ function Inventory({
                 <span
                   className={`badge ${
                     u.saleStatus === 'available'
-                      ? 'success'
-                      : ''
+                      ? 'success available'
+                      : 'sold'
                   }`}
                 >
                   {u.saleStatus}

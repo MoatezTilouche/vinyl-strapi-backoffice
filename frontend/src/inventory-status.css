@@ -1,0 +1,27 @@
+.unit-top > .badge {
+  align-self: flex-start;
+  flex: 0 0 auto;
+  height: auto;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.badge.sold {
+  background: #eef1f4;
+  color: #536172;
+}
+
+.unit-actions button:disabled {
+  background: #f4f6f8;
+  border-color: #dfe4e9;
+  color: #98a3af;
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+.unit-actions button.primary:disabled,
+.unit-actions button.danger:disabled {
+  background: #f4f6f8;
+  border-color: #dfe4e9;
+  color: #98a3af;
+}

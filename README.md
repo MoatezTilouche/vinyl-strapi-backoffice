@@ -110,16 +110,24 @@ L'interface bonus permet de reproduire le workflow sans Postman :
 1. ouvrir `http://localhost:5173` ;
 2. sélectionner le tenant **Demo Records** ;
 3. créer `Daft Punk — Discovery` ;
+![alt text](image.png)
 4. rechercher `Daft Punk Discovery` dans Discogs ;
+![alt text](image-2.png)
 5. associer la release mock `123456` à la fiche produit ;
+![alt text](image-1.png)
 6. aller dans **Inventaire** et créer une unité à 35 EUR ;
+![alt text](image-3.png)
 7. vérifier que le SKU est généré côté backend (`VIN-000001`, puis `VIN-000002`, ...) ;
 8. cliquer sur **Vérifier** ;
 9. cliquer sur **Publier** ;
+![alt text](image-4.png)
 10. vérifier le `ChannelListing` avec un id de type `discogs-listing-0001` ;
+![alt text](image-5.png)
 11. cliquer sur **Simuler vente** ;
 12. vérifier que l'unité passe en `sold`, quantité `0`, et que le listing passe en `removed` ;
+![alt text](image-6.png)
 13. ouvrir **Sync logs** pour voir les `MarketplaceSyncEvent` persistés.
+![alt text](image-7.png)
 
 Les mêmes données sont consultables dans l'admin Strapi.
 
