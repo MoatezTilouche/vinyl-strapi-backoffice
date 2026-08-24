@@ -1,0 +1,20 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: vinyl_backoffice_postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-vinyl_backoffice}
+      POSTGRES_USER: ${POSTGRES_USER:-vinyl}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-vinyl_local_dev_only}
+    ports:
+      - "5432:5432"
+    volumes:
+      - vinyl_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-vinyl} -d ${POSTGRES_DB:-vinyl_backoffice}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  vinyl_pgdata:

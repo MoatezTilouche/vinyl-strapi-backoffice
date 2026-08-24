@@ -1,0 +1,18 @@
+{
+  "kind": "collectionType",
+  "collectionName": "channel_listings",
+  "info": { "singularName": "channel-listing", "pluralName": "channel-listings", "displayName": "Channel Listing" },
+  "options": { "draftAndPublish": false },
+  "attributes": {
+    "tenant": { "type": "relation", "relation": "manyToOne", "target": "api::tenant.tenant", "inversedBy": "channelListings", "required": true },
+    "sellableUnit": { "type": "relation", "relation": "manyToOne", "target": "api::sellable-unit.sellable-unit", "inversedBy": "channelListings", "required": true },
+    "channel": { "type": "enumeration", "enum": ["discogs"], "default": "discogs", "required": true },
+    "externalListingId": { "type": "string" },
+    "externalUrl": { "type": "string" },
+    "status": { "type": "enumeration", "enum": ["not_published", "pending", "published", "failed", "removed", "sync_error"], "default": "not_published", "required": true },
+    "publishedPrice": { "type": "decimal" },
+    "lastSyncAt": { "type": "datetime" },
+    "lastError": { "type": "text" },
+    "syncEvents": { "type": "relation", "relation": "oneToMany", "target": "api::marketplace-sync-event.marketplace-sync-event", "mappedBy": "channelListing" }
+  }
+}

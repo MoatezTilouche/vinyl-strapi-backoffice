@@ -1,0 +1,15 @@
+{
+  "kind": "collectionType",
+  "collectionName": "tenants",
+  "info": { "singularName": "tenant", "pluralName": "tenants", "displayName": "Tenant" },
+  "options": { "draftAndPublish": false },
+  "attributes": {
+    "name": { "type": "string", "required": true },
+    "slug": { "type": "uid", "targetField": "name", "required": true },
+    "active": { "type": "boolean", "default": true },
+    "products": { "type": "relation", "relation": "oneToMany", "target": "api::product.product", "mappedBy": "tenant" },
+    "sellableUnits": { "type": "relation", "relation": "oneToMany", "target": "api::sellable-unit.sellable-unit", "mappedBy": "tenant" },
+    "channelListings": { "type": "relation", "relation": "oneToMany", "target": "api::channel-listing.channel-listing", "mappedBy": "tenant" },
+    "syncEvents": { "type": "relation", "relation": "oneToMany", "target": "api::marketplace-sync-event.marketplace-sync-event", "mappedBy": "tenant" }
+  }
+}

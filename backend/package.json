@@ -1,0 +1,40 @@
+{
+  "name": "vinyl-strapi-backoffice-backend",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Strapi 5 TypeScript backend for the vinyl + Discogs technical test",
+  "scripts": {
+    "build": "strapi build",
+    "develop": "strapi develop",
+    "start": "strapi start",
+    "strapi": "strapi",
+    "test": "npm run test:unit",
+    "test:unit": "vitest run --exclude tests/workflow.e2e.test.ts",
+    "test:e2e": "cross-env RUN_E2E=true vitest run tests/workflow.e2e.test.ts"
+  },
+  "dependencies": {
+    "@strapi/plugin-users-permissions": "5.52.1",
+    "@strapi/strapi": "5.52.1",
+    "pg": "^8.16.3",
+   "react": "^18.3.1",
+   "react-dom": "^18.3.1",
+    "react-router-dom": "6.30.3",
+    "styled-components": "^6.1.19"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "@types/react": "^19.1.12",
+    "@types/react-dom": "^19.1.9",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4",
+    "@strapi/typescript-utils": "5.52.1",
+    "cross-env": "^7.0.3"
+  },
+  "engines": {
+    "node": ">=22.0.0 <=24.x.x",
+    "npm": ">=10.0.0"
+  },
+  "strapi": {
+    "uuid": "vinyl-backoffice-technical-test"
+  }
+}

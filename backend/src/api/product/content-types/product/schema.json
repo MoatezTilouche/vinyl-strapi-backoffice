@@ -1,0 +1,22 @@
+{
+  "kind": "collectionType",
+  "collectionName": "products",
+  "info": { "singularName": "product", "pluralName": "products", "displayName": "Product" },
+  "options": { "draftAndPublish": false },
+  "attributes": {
+    "tenant": { "type": "relation", "relation": "manyToOne", "target": "api::tenant.tenant", "inversedBy": "products", "required": true },
+    "productType": { "type": "enumeration", "enum": ["vinyl"], "default": "vinyl", "required": true },
+    "title": { "type": "string", "required": true },
+    "artist": { "type": "string", "required": true },
+    "description": { "type": "text" },
+    "label": { "type": "string" },
+    "year": { "type": "integer", "min": 1900, "max": 2100 },
+    "country": { "type": "string" },
+    "format": { "type": "string" },
+    "catalogReference": { "type": "string" },
+    "discogsReleaseId": { "type": "string" },
+    "discogsMasterId": { "type": "string" },
+    "sellableUnits": { "type": "relation", "relation": "oneToMany", "target": "api::sellable-unit.sellable-unit", "mappedBy": "product" },
+    "syncEvents": { "type": "relation", "relation": "oneToMany", "target": "api::marketplace-sync-event.marketplace-sync-event", "mappedBy": "product" }
+  }
+}
